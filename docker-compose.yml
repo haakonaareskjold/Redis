@@ -3,7 +3,7 @@ version: "3.8"
 services:
 
   php:
-    image: php:7-4-alpine
+    image: php:7.4-alpine
     working_dir: /var/www
     command: php -S 0.0.0.0:8080 index.php
     environment:
