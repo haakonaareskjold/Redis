@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+
+  php:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    working_dir: /var/www
+    command: php -S 0.0.0.0:8080 index.php
+    environment:
+      docker: "true"
+    ports:
+    - 8080:8080
+    - 6379:6379
+    volumes:
+      - .:/var/www
+
+  composer:
+    image: composer:latest
+    working_dir: /var/www
+    command: install
+    volumes:
+    - .:/var/www
