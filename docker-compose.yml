@@ -12,6 +12,8 @@ services:
     - 8080:8080
     volumes:
       - .:/var/www
+    networks:
+      - net
 
   composer:
     image: composer:latest
@@ -21,7 +23,10 @@ services:
     - .:/var/www
 
   redis:
-    image: redis:latest
-    command: redis-server --appendonly yes
-    ports:
-      - 6379:6379
+    image: redis:6.0.8-alpine
+    networks:
+      - net
+
+networks:
+  net:
+    driver: bridge
