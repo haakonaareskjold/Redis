@@ -3,16 +3,13 @@ version: "3.8"
 services:
 
   php:
-    build:
-      context: ./
-      dockerfile: Dockerfile
+    image: php:7-4-alpine
     working_dir: /var/www
     command: php -S 0.0.0.0:8080 index.php
     environment:
       docker: "true"
     ports:
     - 8080:8080
-    - 6379:6379
     volumes:
       - .:/var/www
 
@@ -22,3 +19,9 @@ services:
     command: install
     volumes:
     - .:/var/www
+
+  redis:
+    image: redis:latest
+    command: redis-server --appendonly yes
+    ports:
+      - 6379:6379
