@@ -7,7 +7,7 @@ require_once __DIR__. "/vendor/autoload.php";
 if(!defined('STDOUT')) define('STDOUT', fopen('php://stdout', 'w'));
 
 // imports Predis
-$counter = new Predis\Client('tcp://192.168.48.3:6379');
+$counter = new Predis\Client('tcp://192.168.0.1:6379');
 
 // checks if key 'counter' exists, if not sets value to 0
 if(!$counter->exists('counter')) {

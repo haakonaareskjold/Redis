@@ -13,10 +13,11 @@ services:
     volumes:
       - .:/var/www
     networks:
-      - net
+      net:
+        ipv4_address: 192.168.0.2
 
   composer:
-    image: composer:latest
+    image: library/composer:2.0.0-RC1
     working_dir: /var/www
     command: install
     volumes:
@@ -25,8 +26,13 @@ services:
   redis:
     image: redis:6.0.8-alpine
     networks:
-      - net
+      net:
+        ipv4_address: 192.168.0.1
 
 networks:
   net:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.0.0/16
+          gateway: 192.168.0.3
