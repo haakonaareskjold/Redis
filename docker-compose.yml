@@ -5,6 +5,9 @@ services:
   php:
     image: php:7.4-alpine
     working_dir: /var/www
+    healthcheck:
+      test: echo "waiting 10 seconds for composer dependencies"
+      interval: 10s
     command: php -S 0.0.0.0:8080 index.php
     environment:
       docker: "true"
@@ -32,6 +35,9 @@ services:
   ab:
     image: jordi/ab:latest
     command: -n 100 -c 10 http://192.168.0.2:8080/
+    depends_on:
+      php:
+        condition: service_healthy
     networks:
       net:
         ipv4_address: 192.168.0.4
