@@ -1,8 +1,8 @@
 # Redis benchmarking test
 
 ### Requirement
-* Docker
-* Docker-compose
+* Docker, ^19.03
+* Docker-compose ^1.27.2
 
 ### How to run
 * simply use `docker-compose up` and everything will happen automatically
