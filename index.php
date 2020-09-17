@@ -1,10 +1,15 @@
 <?php
 
+/**
+ * Changed the function to output to stderr instead of stdout, despite not these being errors
+ * This is so Docker can display the stdout message along with the requests
+ */
+
+// print out log row with current count of request to stderr
+if(!defined('STDERR')) define('STDERR', fopen('php://stderr', 'w'));
+
 // composer autoload
 require_once __DIR__. "/vendor/autoload.php";
-
-// print out log row with current count of request to stdout
-if(!defined('STDOUT')) define('STDOUT', fopen('php://stdout', 'w'));
 
 // imports Predis
 $counter = new Predis\Client('tcp://192.168.0.1:6379');
@@ -23,11 +28,12 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 $result = $counter->get('counter');
 strval($result);
 
-//outputs result as string to stdout
-fwrite(STDOUT, "There has been a total of '$result' Requests so far");
+//outputs result as string to stderr
+fwrite(STDERR, "There has been a total of '$result' Requests so far");
+
 
 // if value over 100 outputs information
 if ($counter->get('counter') >= 100) {
-    fwrite(STDOUT, ". Counter will not surpass 100, resetting!");
+    fwrite(STDERR, ". Counter will not surpass 100, resetting!");
     $counter->expire('counter', 0);
 }

@@ -5,6 +5,10 @@ services:
   php:
     image: php:7.4-alpine
     working_dir: /var/www
+    healthcheck:
+      test: echo "waiting 12 sec for dependencies to be installed"
+      timeout: 12s
+      retries: 0
     command: php -S 0.0.0.0:8080 index.php
     environment:
       docker: "true"
@@ -28,6 +32,17 @@ services:
     networks:
       net:
         ipv4_address: 192.168.0.1
+
+
+  ab:
+    image: jordi/ab:latest
+    command: -n 100 -c 10 http://172.17.0.1:8080/
+    restart: on-failure
+    depends_on:
+      php:
+        condition: service_healthy
+
+
 
 networks:
   net:
