@@ -6,8 +6,8 @@ services:
     image: php:7.4-alpine
     working_dir: /var/www
     healthcheck:
-      test: echo "waiting 10 seconds for composer dependencies"
-      interval: 10s
+      test: echo "waiting 12 seconds for composer dependencies"
+      interval: 12s
     command: php -S 0.0.0.0:8080 index.php
     environment:
       docker: "true"
