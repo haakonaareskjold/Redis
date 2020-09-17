@@ -28,6 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 $result = $counter->get('counter');
 strval($result);
 
+echo $result;
+
 //outputs result as string to stderr
 fwrite(STDERR, "There has been a total of '$result' Requests so far");
 
